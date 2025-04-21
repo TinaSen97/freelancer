@@ -4,7 +4,7 @@ namespace Fickrr\Http\Controllers;
 
 use Fickrr\Http\Controllers\Controller;
 use Fickrr\Models\Freelancer;
-
+use Illuminate\Support\Str; 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -26,10 +26,15 @@ class FreelancerAuthController extends Controller
 
     public function register(Request $request)
     {
-        $this->validator($request->all())->validate();
-
-        $freelancer = $this->create($request->all());
-
+        $this->validator($request->all())->validate();  
+        $freelancer = Freelancer::create([
+            'name'        => $request->name,
+            'email'       => $request->email,
+            'password'    => Hash::make($request->password),
+            'user_token'  => Str::random(40), 
+        ]);
+    
+       
         event(new Registered($freelancer));
         
         Auth::guard('freelancer')->login($freelancer);  
@@ -44,7 +49,7 @@ class FreelancerAuthController extends Controller
 
     public function dashboard()
     {
-        return view('auth.freelancer-dashboard');
+        return redirect()->route('freelancer.profile-settings.edit');
     }
 
     protected function guard()
@@ -54,6 +59,8 @@ class FreelancerAuthController extends Controller
 
     public function login(Request $request)
     {
+        \Auth::logout();
+
         $credentials =  $this->validate($request, [
             'email' => 'required|email',
             'password' => 'required|min:6'
@@ -72,7 +79,7 @@ class FreelancerAuthController extends Controller
     {
         Auth::guard('freelancer')->logout();
         request()->session()->invalidate();
-        return redirect('/');
+        return redirect('/freelancer/login');
     }
 
     protected function validator(array $data)

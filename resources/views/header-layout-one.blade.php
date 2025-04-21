@@ -99,9 +99,27 @@
               </a>
               @endif
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item d-flex align-items-center" href="{{ url('/logout') }}">
+              <!-- <a class="dropdown-item d-flex align-items-center" href="{{ url('/logout') }}">
                 <i class="dwg-sign-out opacity-60 mr-2"></i> {{ __('Logout') }}
               </a>
+
+              <a class="dropdown-item d-flex align-items-center" href="{{ url('/logout') }}">
+                <i class="dwg-sign-out opacity-60 mr-2"></i> {{ __('Logout') }}
+              </a> -->
+
+              @if (Auth::guard('freelancer')->check())
+                  <!-- Freelancer Logout Link -->
+                  <a class="dropdown-item d-flex align-items-center" href="{{ url('/freelancer/logout') }}">
+                      <i class="dwg-sign-out opacity-60 mr-2"></i> {{ __('Freelancer Logout') }}
+                  </a>
+              @else
+                  <!-- General User Logout Link -->
+                  <a class="dropdown-item d-flex align-items-center" href="{{ url('/logout') }}">
+                      <i class="dwg-sign-out opacity-60 mr-2"></i> {{ __('Logout') }}
+                  </a>
+              @endif
+
+
             </div>
           </div>
           @endif

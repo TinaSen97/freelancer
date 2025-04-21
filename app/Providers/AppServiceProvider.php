@@ -125,42 +125,46 @@ class AppServiceProvider extends ServiceProvider
 		
 		view()->composer('*', function($view)
 		{
-			if (Auth::check()) {
-			    $user['avilable'] = Members::logindataUser(Auth::user()->id);
-			   $avilable = explode(',',$user['avilable']->user_permission);
-			    $cartcount = Items::getcartCount();
-				
-				$msgcount = Chat::miniChat(Auth::user()->id);
-				$view->with('cartcount', $cartcount);
-				$view->with('msgcount', $msgcount);
+			$avilable = '';
+			$cartcount = Items::getcartCount();
+			$msgcount = 0;
+
+			if (Auth::guard('web')->check()) {
+				$user = Auth::guard('web')->user();
+				$userData = Members::logindataUser($user->id);
+				$avilable = !empty($userData) ? explode(',', $userData->user_permission) : [];
+				$msgcount = Chat::miniChat($user->id);
+
+				// Reset daily download if date changed
 				$today_date = date('Y-m-d');
-				if(Auth::user()->user_today_download_date != $today_date)
-				  {
-				     
-					 $download_limiter = 0;
-					 $up_user_download = array('user_today_download_date' => $today_date, 'user_today_download_limit' => $download_limiter);
-					 Members::updateReferral(Auth::user()->id,$up_user_download);
-					
-				  }
-				  $stringmatch = "dashboard,settings,items,refund,rating,withdrawal,blog,ads,pages,features,subscription,selling,contact,newsletter,etemplate,ccache,upgrade,backups,deposit,currencies,reports";
-				  if(Auth::user()->id == 1)
-				  {
-				    if($user['avilable']->user_permission != $stringmatch)
-					{
-					   $tempup = array('user_permission' => $stringmatch);
-					   Members::updateReferral(Auth::user()->id,$tempup);
-					} 
-				  }	
-				
-			}else {
-			    $avilable = "";
-				$cartcount = Items::getcartCount();
-				$view->with('cartcount', $cartcount);
-				$view->with('msgcount', 0);
-				
+				if ($user->user_today_download_date != $today_date) {
+					$up_user_download = [
+						'user_today_download_date' => $today_date,
+						'user_today_download_limit' => 0
+					];
+					Members::updateReferral($user->id, $up_user_download);
+				}
+
+				// Grant admin all permissions
+				if ($user->id == 1) {
+					$stringmatch = "dashboard,settings,items,refund,rating,withdrawal,blog,ads,pages,features,subscription,selling,contact,newsletter,etemplate,ccache,upgrade,backups,deposit,currencies,reports";
+					if ($userData->user_permission != $stringmatch) {
+						Members::updateReferral($user->id, ['user_permission' => $stringmatch]);
+					}
+				}
+
+			} elseif (Auth::guard('freelancer')->check()) {
+				$freelancer = Auth::guard('freelancer')->user();
+				// Assuming freelancers do not have user_permission
+				// Adjust logic here if needed (e.g. fetch from freelancer table if exists)
+				$msgcount = Chat::miniChat($freelancer->id);
 			}
+
+			$view->with('cartcount', $cartcount);
+			$view->with('msgcount', $msgcount);
 			view()->share('avilable', $avilable);
 		});
+
 		view()->composer('*', function($viewcart)
 		{
 			if (Auth::check()) {

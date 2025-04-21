@@ -1,29 +1,5 @@
 <?php
-
-use Illuminate\Support\Facades\Mail;
-
-Route::get('/test-email', function () {
-    Mail::raw('✅ Test email via SMTP (Mailtrap)', function ($message) {
-        $message->to('genknooz600@email.com') // change this to your real email
-                ->subject('Test Email from Laravel SMTP');
-    });
-
-    return '📨 Test email sent!';
-});
-
-
-
-// Freelancer Verification Routes
-Route::get('freelancer/email/verify', 'FreelancerAuthController@showVerificationForm')->name('freelancer.verification.notice');
-Route::get('freelancer/email/verify/{id}/{hash}', 'FreelancerAuthController@verify')->name('verification.verify')->middleware('signed');
-Route::post('freelancer/email/resend', 'FreelancerAuthController@resend')->name('freelancer.verification.resend');
-
-// Freelancer Password Reset Routes
-Route::get('freelancer/password/reset', 'FreelancerAuth\PasswordResetController@showLinkRequestForm')->name('freelancer.password.request');
-Route::post('freelancer/password/email', 'FreelancerAuth\PasswordResetController@sendResetLinkEmail')->name('freelancer.password.email');
-
-
-
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 /* admin panel */
 
 
@@ -461,27 +437,62 @@ Route::prefix('freelancer')->group(function() {
         Route::post('/register', 'FreelancerAuthController@register');
         Route::get('/login', 'FreelancerAuthController@showLoginForm')->name('freelancer.login');
         Route::post('/login', 'FreelancerAuthController@login');
-        
-        // Password Reset Routes
-        Route::get('/password/reset', 'FreelancerAuth\PasswordResetController@showLinkRequestForm')->name('freelancer.password.request');
-        Route::post('/password/email', 'FreelancerAuth\PasswordResetController@sendResetLinkEmail')->name('freelancer.password.email');
-        Route::get('/password/reset/{token}', 'FreelancerAuth\PasswordResetController@showResetForm')->name('freelancer.password.reset');
-        Route::post('/password/reset', 'FreelancerAuth\PasswordResetController@reset')->name('freelancer.password.update');
-    });
 
-    // // Email Verification Routes
-    // Route::middleware('auth:freelancer')->group(function() {
-    //     Route::get('/email/verify', 'FreelancerAuth\VerificationController@show')->name('freelancer.verification.notice');
-    //     Route::get('/email/verify/{id}/{hash}', 'FreelancerAuth\VerificationController@verify')->name('freelancer.verification.verify');
-    //     Route::post('/email/resend', 'FreelancerAuth\VerificationController@resend')->name('freelancer.verification.resend');
-    // });
+
+		/* forgot */
+
+		Route::get('/forgot', 'FreelancerCommonController@view_forgot')->name('freelancer.password.request');
+		Route::post('/forgot', 'FreelancerCommonController@update_forgot')->name('freelancer.forgot');
+
+		Route::get('/reset/{user_token}', 'FreelancerCommonController@view_reset');
+		Route::post('/reset', ('FreelancerCommonController@update_reset'))->name('freelancer.reset');
+		
+		/* forgot */
+
+		/**
+		 * Show verification notice
+		 */
+		Route::get('/freelancer/email/verify', function () {
+			return view('freelancer.verify_notice');
+		})->middleware('auth:freelancer')->name('verification.verify');
+
+		/**
+		 * Handle email verification link
+		 */
+		Route::get('/freelancer/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+			$request->fulfill();
+			return redirect('/freelancer/dashboard'); // or wherever you want to send them
+		})->middleware(['auth:freelancer', 'signed'])->name('freelancer.verification.verify');
+
+		/**
+		 * Resend verification email
+		 */
+		Route::post('/freelancer/email/verification-notification', function (Request $request) {
+			$request->user('freelancer')->sendEmailVerificationNotification();
+			return back()->with('resent', true);
+		})->middleware(['auth:freelancer', 'throttle:6,1'])->name('freelancer.verification.resend');
+
+	    });
 	    
     // Dashboard Route
     Route::get('/dashboard', 'FreelancerAuthController@dashboard')
         ->name('freelancer.dashboard')
         ->middleware('auth:freelancer');
 
-    Route::post('/logout', 'FreelancerAuthController@logout')
+    // Profile Settings Route (matches vendor's /profile-settings pattern)
+    Route::get('profile-settings', 'FreelancerProfileController@edit')
+        ->name('freelancer.profile-settings.edit')
+        ->middleware('auth:freelancer');
+        
+    Route::put('profile-settings', 'FreelancerProfileController@update')
+        ->name('freelancer.profile-settings.update')
+        ->middleware('auth:freelancer');
+        
+    Route::post('profile-settings/upload-image', 'FreelancerProfileController@uploadImage')
+        ->name('freelancer.profile-settings.upload-image')
+        ->middleware('auth:freelancer');
+
+    Route::get('/logout', 'FreelancerAuthController@logout')
         ->name('freelancer.logout')
         ->middleware('auth:freelancer');
     

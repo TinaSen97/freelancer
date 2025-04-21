@@ -18,7 +18,7 @@
         "doctrine/dbal": "^4.2.1",
         "guzzlehttp/guzzle": "^7.2",
         "illuminate/support": "*",
-        "intervention/image": "^2.5",
+        "intervention/image": "^2.7",
         "josiasmontag/laravel-recaptchav3": "^1.0",
         "laravel/framework": "^11.0",
         "laravel/sanctum": "^4.0",
