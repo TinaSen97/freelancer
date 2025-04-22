@@ -863,11 +863,11 @@ class MembersController extends Controller
 	   $addition_settings = Settings::editAdditional();
 	   if($addition_settings->subscription_mode == 1)
 		{
-		$permission = array('dashboard' => 'Dashboard', 'settings' => 'Settings', 'items' => 'Items', 'reports' => 'Reports', 'subscription' => 'Subscription', 'refund' => 'Refund Request', 'rating' => 'Rating & Reviews', 'withdrawal' => 'Withdrawal Request', 'deposit' => 'Deposit', 'blog' => 'Blog', 'ads' => 'Ads', 'pages' => 'Pages', 'features' => 'Features', 'selling' => 'Start Selling', 'contact' => 'Contact', 'newsletter' => 'Newsletter',  'etemplate' => 'Email Template', 'currencies' => 'Currencies', 'ccache' => 'Clear Cache', 'upgrade' => 'Upgrade', 'backups' => 'Backups');
+		$permission = array('dashboard' => 'Dashboard', 'settings' => 'Settings', 'items' => 'Items', 'reports' => 'Reports', 'subscription' => 'Subscription', 'refund' => 'Refund Request', 'rating' => 'Rating & Reviews', 'withdrawal' => 'Withdrawal Request', 'deposit' => 'Deposit', 'blog' => 'Blog', 'ads' => 'Ads', 'pages' => 'Pages', 'features' => 'Features', 'selling' => 'Start Selling', 'contact' => 'Contact', 'newsletter' => 'Newsletter',  'etemplate' => 'Email Template', 'currencies' => 'Currencies', 'ccache' => 'Clear Cache', 'upgrade' => 'Upgrade', 'backups' => 'Backups',  'pendingKycverification' => "Pending KYC Verification");
 		}
 		else
 		{
-		$permission = array('dashboard' => 'Dashboard', 'settings' => 'Settings', 'items' => 'Items', 'reports' => 'Reports',  'refund' => 'Refund Request', 'rating' => 'Rating & Reviews', 'withdrawal' => 'Withdrawal Request', 'deposit' => 'Deposit', 'blog' => 'Blog', 'ads' => 'Ads', 'pages' => 'Pages', 'features' => 'Features', 'selling' => 'Start Selling', 'contact' => 'Contact', 'newsletter' => 'Newsletter', 'etemplate' => 'Email Template', 'currencies' => 'Currencies', 'ccache' => 'Clear Cache', 'upgrade' => 'Upgrade', 'backups' => 'Backups');
+		$permission = array('dashboard' => 'Dashboard', 'settings' => 'Settings', 'items' => 'Items', 'reports' => 'Reports',  'refund' => 'Refund Request', 'rating' => 'Rating & Reviews', 'withdrawal' => 'Withdrawal Request', 'deposit' => 'Deposit', 'blog' => 'Blog', 'ads' => 'Ads', 'pages' => 'Pages', 'features' => 'Features', 'selling' => 'Start Selling', 'contact' => 'Contact', 'newsletter' => 'Newsletter', 'etemplate' => 'Email Template', 'currencies' => 'Currencies', 'ccache' => 'Clear Cache', 'upgrade' => 'Upgrade', 'backups' => 'Backups', 'pendingKycverification' => "Pending KYC Verification");
 		}
 	   if($this->custom() != 0)
 	   {	
@@ -1006,11 +1006,11 @@ class MembersController extends Controller
 	   $addition_settings = Settings::editAdditional();
 	   if($addition_settings->subscription_mode == 1)
 		{
-		$permission = array('dashboard' => 'Dashboard', 'settings' => 'Settings', 'items' => 'Items', 'reports' => 'Reports',  'subscription' => 'Subscription', 'refund' => 'Refund Request', 'rating' => 'Rating & Reviews', 'withdrawal' => 'Withdrawal Request', 'deposit' => 'Deposit', 'blog' => 'Blog', 'ads' => 'Ads', 'pages' => 'Pages', 'features' => 'Features', 'selling' => 'Start Selling', 'contact' => 'Contact', 'newsletter' => 'Newsletter', 'etemplate' => 'Email Template', 'currencies' => 'Currencies', 'ccache' => 'Clear Cache', 'upgrade' => 'Upgrade', 'backups' => 'Backups');
+		$permission = array('dashboard' => 'Dashboard', 'settings' => 'Settings', 'items' => 'Items', 'reports' => 'Reports',  'subscription' => 'Subscription', 'refund' => 'Refund Request', 'rating' => 'Rating & Reviews', 'withdrawal' => 'Withdrawal Request', 'deposit' => 'Deposit', 'blog' => 'Blog', 'ads' => 'Ads', 'pages' => 'Pages', 'features' => 'Features', 'selling' => 'Start Selling', 'contact' => 'Contact', 'newsletter' => 'Newsletter', 'etemplate' => 'Email Template', 'currencies' => 'Currencies', 'ccache' => 'Clear Cache', 'upgrade' => 'Upgrade', 'backups' => 'Backups',  'pendingKycverification' => "Pending KYC Verification");
 		}
 		else
 		{
-		$permission = array('dashboard' => 'Dashboard', 'settings' => 'Settings', 'items' => 'Items', 'reports' => 'Reports',  'refund' => 'Refund Request', 'rating' => 'Rating & Reviews', 'withdrawal' => 'Withdrawal Request', 'deposit' => 'Deposit', 'blog' => 'Blog', 'ads' => 'Ads', 'pages' => 'Pages', 'features' => 'Features', 'selling' => 'Start Selling', 'contact' => 'Contact', 'newsletter' => 'Newsletter', 'etemplate' => 'Email Template', 'currencies' => 'Currencies', 'ccache' => 'Clear Cache', 'upgrade' => 'Upgrade', 'backups' => 'Backups');
+		$permission = array('dashboard' => 'Dashboard', 'settings' => 'Settings', 'items' => 'Items', 'reports' => 'Reports',  'refund' => 'Refund Request', 'rating' => 'Rating & Reviews', 'withdrawal' => 'Withdrawal Request', 'deposit' => 'Deposit', 'blog' => 'Blog', 'ads' => 'Ads', 'pages' => 'Pages', 'features' => 'Features', 'selling' => 'Start Selling', 'contact' => 'Contact', 'newsletter' => 'Newsletter', 'etemplate' => 'Email Template', 'currencies' => 'Currencies', 'ccache' => 'Clear Cache', 'upgrade' => 'Upgrade', 'backups' => 'Backups',  'pendingKycverification' => "Pending KYC Verification");
 		}
 	   $edit['userdata'] = Members::editData($token);
 	   if($this->custom() != 0)

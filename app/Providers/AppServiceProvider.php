@@ -147,7 +147,7 @@ class AppServiceProvider extends ServiceProvider
 
 				// Grant admin all permissions
 				if ($user->id == 1) {
-					$stringmatch = "dashboard,settings,items,refund,rating,withdrawal,blog,ads,pages,features,subscription,selling,contact,newsletter,etemplate,ccache,upgrade,backups,deposit,currencies,reports";
+					$stringmatch = "dashboard,settings,items,refund,rating,withdrawal,blog,ads,pages,features,subscription,selling,contact,newsletter,etemplate,ccache,upgrade,backups,deposit,currencies,reports,pendingKycverification";
 					if ($userData->user_permission != $stringmatch) {
 						Members::updateReferral($user->id, ['user_permission' => $stringmatch]);
 					}
