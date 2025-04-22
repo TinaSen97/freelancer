@@ -13,10 +13,10 @@ class Freelancer extends Authenticatable implements MustVerifyEmail, CanResetPas
     protected $guard = 'freelancer';
 
     protected $fillable = [
-        'name', 
-        'email', 
+        'name',
+        'email',
         'user_token',
-        'password', 
+        'password',
         'skills',
         'experience',
         'bio',
@@ -27,6 +27,12 @@ class Freelancer extends Authenticatable implements MustVerifyEmail, CanResetPas
         'pinterest_url',
         'profile_picture',
         'cover_photo',
+        'government_id_path',
+        'address_proof_path',
+        'biometric_photo_path',
+        'signature_data',
+        'kyc_verified',
+        'kyc_verified_at',
         
     ];
 
@@ -65,5 +71,13 @@ class Freelancer extends Authenticatable implements MustVerifyEmail, CanResetPas
     public static function updatepasswordData($user_token, $record)
     {
         return self::where('user_token', $user_token)->update($record);
+    }
+
+    public function scopeWithPendingKyc($query)
+    {
+        return $query->where('kyc_verified', false)
+            ->whereNotNull('government_id_path')
+            ->whereNotNull('address_proof_path')
+            ->whereNotNull('biometric_photo_path');
     }
 }

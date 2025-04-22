@@ -27,11 +27,13 @@ class FreelancerAuthController extends Controller
     public function register(Request $request)
     {
         $this->validator($request->all())->validate();  
+        // Handle KYC document storage
+        
         $freelancer = Freelancer::create([
-            'name'        => $request->name,
-            'email'       => $request->email,
-            'password'    => Hash::make($request->password),
-            'user_token'  => Str::random(40), 
+            'name'              => $request->name,
+            'email'             => $request->email,
+            'password'          => Hash::make($request->password),
+            'user_token'        => Str::random(40),
         ]);
     
        
@@ -88,15 +90,25 @@ class FreelancerAuthController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:freelancers'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'government_id' => ['required', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:5120'],
+            'address_proof' => ['required', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:5120'],
+            'biometric_photo' => ['required', 'image', 'mimes:jpg,jpeg,png', 'max:2048', 'dimensions:ratio=1'],
+            'signature' => ['required', 'string', 'regex:/^data:image\/(png|jpg);base64,/'],
+            'kyc_terms' => ['required', 'accepted']
         ]);
     }
 
     protected function create(array $data)
     {
-        return Freelancer::create([
+        $freelancer = Freelancer::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'government_id_path' => $data['government_id']->store('', 'kyc'),
+            'address_proof_path' => $data['address_proof']->store('', 'kyc'),
+            'biometric_photo_path' => $data['biometric_photo']->store('', 'kyc'),
         ]);
+
+        return $freelancer;
     }
 }

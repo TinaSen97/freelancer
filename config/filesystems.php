@@ -48,6 +48,26 @@ return [
             'root' => storage_path('app'),
         ],
 
+        'private' => [
+            'driver' => 'local',
+            'root' => storage_path('app/private'),
+            'visibility' => 'private',
+        ],
+
+        'kyc' => [
+            'driver' => 'local',
+            'root' => storage_path('app/kyc_docs'),
+            'visibility' => 'private',
+            'throw' => false,
+        ],
+
+        'signatures' => [
+            'driver' => 'local',
+            'root' => public_path('signatures'),
+            'url' => env('APP_URL').'/signatures',
+            'visibility' => 'public',
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
