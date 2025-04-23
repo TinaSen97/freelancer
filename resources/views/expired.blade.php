@@ -15,10 +15,25 @@
       </div>
       </div>
     </section>
-<div class="container py-5 mt-md-2 mb-2">
+    <div class="container py-5 mt-md-2 mb-2">
       <div class="row">
         <div class="col-lg-12" data-aos="fade-up" data-aos-delay="200" align="center">
-          <h4>{{ __('Your subscription has been expired. Please renewal your') }} <a href="{{ URL::to('/subscription') }}">{{ __('Subscription') }}</a></h4><br/>
+            @if(Auth::guard('freelancer')->check())
+                <h4>
+                    {{ __('Your subscription has been expired. Please renew your') }} 
+                    <a href="{{ URL::to('/freelancer-subscription') }}">{{ __('Subscription') }}</a>
+                </h4><br/>
+            @elseif(!Auth::check())
+                <h4>
+                    {{ __('Your subscription has been expired. Please renew your') }} 
+                    <a href="{{ URL::to('/subscription') }}">{{ __('Subscription') }}</a>
+                </h4><br/>
+            @else
+                <h4>
+                    {{ __('Your subscription has been expired. Please renew your') }} 
+                    <a href="{{ URL::to('/subscription') }}">{{ __('Subscription') }}</a>
+                </h4><br/>
+            @endif
          </div>
       </div>
     </div>

@@ -4531,9 +4531,20 @@ class CommonController extends Controller
 	
 	public function view_subscription()
 	{
-	 $subscription['view'] = Subscription::viewSubscription();
-	 $data = array('subscription' => $subscription);  
-	 return view('subscription')->with($data);
+		if(Auth::check())
+		{
+			$subscription['view'] = Subscription::viewSubscription();
+			
+		}
+	 	elseif(Auth::guard('freelancer')->check())
+		{
+			$subscription['view'] = Subscription::viewFreelancerSubscription();
+		}
+		else{
+			$subscription['view'] = Subscription::viewSubscription();
+		}
+		$data = array('subscription' => $subscription);  
+	 	return view('subscription')->with($data);
 	}
 	
 	public function view_start_selling()

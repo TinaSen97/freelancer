@@ -167,6 +167,14 @@
                                                 </select>
                                                 
                                             </div>   
+
+                                            <div class="form-group">
+                                                <label class="control-label mb-1" >Plan Type <span class="require">*</span></label>
+                                                <select class="form-control" name="plan_type" data-bvalidator="required">
+                                                    <option value="general" @if($edit['subscri']->plan_type == 'general') selected @endif>General</option>
+                                                    <option value="freelancer" @if($edit['subscri']->plan_type == 'freelancer') selected @endif>Freelancer</option>
+                                                </select>
+                                            </div>
                                              
                                         </div>
                                         

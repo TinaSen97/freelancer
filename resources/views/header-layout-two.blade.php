@@ -657,7 +657,16 @@
                                     </li>
                                     @endif
                                     @if($addition_settings->subscription_mode == 1)
-                                    <li><a href="{{ url('/subscription') }}">{{ __('Subscription') }}</a></li>
+                                    
+                                        @if(Auth::guard('freelancer')->check())
+                                            <li><a href="{{ url('/freelancer-subscription') }}">{{ __('Subscription') }}</a></li>
+                                        @elseif(Auth::check())
+                                            <li><a href="{{ url('/subscription') }}">{{ __('Subscription') }}</a></li>
+                                        @else
+                                            <li><a href="{{ url('/subscription') }}">{{ __('Subscription') }}</a></li>
+                                        @endif
+                                    
+
                                     @endif
                                     <li>
                                         <a href="{{ URL::to('/flash-sale') }}" class="red-color">{{ __('Flash Sale') }}</a>

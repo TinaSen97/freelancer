@@ -242,6 +242,7 @@ class SubscriptionController extends Controller
 		 $icon_color = $request->input('icon_color');
 		 $button_bg_color = $request->input('button_bg_color');
 		 $button_text_color = $request->input('button_text_color');
+		 $plan_type = $request->input('plan_type');
 		 
 		 $extra_info = $request->input('extra_info');
          
@@ -277,7 +278,7 @@ class SubscriptionController extends Controller
 		
 		   
 		 
-		$data = array('subscr_name' => $subscr_name, 'subscr_slug' => $subscr_slug, 'subscr_price' => $subscr_price, 'subscr_duration' => $subscr_duration, 'subscr_item_level' => $subscr_item_level, 'subscr_item' => $subscr_item, 'subscr_space_level' => $subscr_space_level, 'subscr_space' => $subscr_space, 'subscr_space_type' => $subscr_space_type, 'subscr_order' => $subscr_order, 'subscr_email_support' => $subscr_email_support, 'subscr_payment_mode' => $subscr_payment_mode, 'subscr_status' => $subscr_status, 'subscr_download_item' => $subscr_download_item, 'highlight_pack' => $highlight_pack, 'highlight_bg_color' => $highlight_bg_color, 'highlight_text_color' => $highlight_text_color, 'icon_color' => $icon_color, 'button_bg_color' => $button_bg_color, 'button_text_color' => $button_text_color, 'extra_info' => $extra_info);
+		$data = array('subscr_name' => $subscr_name, 'subscr_slug' => $subscr_slug, 'subscr_price' => $subscr_price, 'subscr_duration' => $subscr_duration, 'subscr_item_level' => $subscr_item_level, 'subscr_item' => $subscr_item, 'subscr_space_level' => $subscr_space_level, 'subscr_space' => $subscr_space, 'subscr_space_type' => $subscr_space_type, 'subscr_order' => $subscr_order, 'subscr_email_support' => $subscr_email_support, 'subscr_payment_mode' => $subscr_payment_mode, 'subscr_status' => $subscr_status, 'subscr_download_item' => $subscr_download_item, 'highlight_pack' => $highlight_pack, 'highlight_bg_color' => $highlight_bg_color, 'highlight_text_color' => $highlight_text_color, 'icon_color' => $icon_color, 'button_bg_color' => $button_bg_color, 'button_text_color' => $button_text_color, 'extra_info' => $extra_info, 'plan_type' => $plan_type);
         Subscription::insertsubData($data);
         return redirect('/admin/subscription')->with('success', 'Insert successfully.');
             
@@ -393,7 +394,7 @@ class SubscriptionController extends Controller
 		 $button_bg_color = $request->input('button_bg_color');
 		 $button_text_color = $request->input('button_text_color');
 		 $extra_info = $request->input('extra_info');
-		 
+		 $plan_type = $request->input('plan_type');
 		 $request->validate([
 		                    
 							
@@ -429,7 +430,7 @@ class SubscriptionController extends Controller
 		 
 		
 		
-		$data = array('subscr_name' => $subscr_name, 'subscr_slug' => $subscr_slug, 'subscr_price' => $subscr_price, 'subscr_duration' => $subscr_duration, 'subscr_item_level' => $subscr_item_level, 'subscr_item' => $subscr_item, 'subscr_space_level' => $subscr_space_level, 'subscr_space' => $subscr_space, 'subscr_space_type' => $subscr_space_type, 'subscr_order' => $subscr_order, 'subscr_email_support' => $subscr_email_support, 'subscr_payment_mode' => $subscr_payment_mode, 'subscr_status' => $subscr_status, 'subscr_download_item' => $subscr_download_item, 'highlight_pack' => $highlight_pack, 'highlight_bg_color' => $highlight_bg_color, 'highlight_text_color' => $highlight_text_color, 'icon_color' => $icon_color, 'button_bg_color' => $button_bg_color, 'button_text_color' => $button_text_color, 'extra_info' => $extra_info);
+		$data = array('subscr_name' => $subscr_name, 'subscr_slug' => $subscr_slug, 'subscr_price' => $subscr_price, 'subscr_duration' => $subscr_duration, 'subscr_item_level' => $subscr_item_level, 'subscr_item' => $subscr_item, 'subscr_space_level' => $subscr_space_level, 'subscr_space' => $subscr_space, 'subscr_space_type' => $subscr_space_type, 'subscr_order' => $subscr_order, 'subscr_email_support' => $subscr_email_support, 'subscr_payment_mode' => $subscr_payment_mode, 'subscr_status' => $subscr_status, 'subscr_download_item' => $subscr_download_item, 'highlight_pack' => $highlight_pack, 'highlight_bg_color' => $highlight_bg_color, 'highlight_text_color' => $highlight_text_color, 'icon_color' => $icon_color, 'button_bg_color' => $button_bg_color, 'button_text_color' => $button_text_color, 'extra_info' => $extra_info, 'plan_type' => $plan_type);
 		
         Subscription::updatesubData($subscr_id,$data);
 		if($this->custom() != 0)

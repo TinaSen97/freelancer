@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Fickrr\Models\Settings;
 
 use Illuminate\Auth\Events\Registered;
 
@@ -62,13 +63,36 @@ class FreelancerAuthController extends Controller
     public function login(Request $request)
     {
         \Auth::logout();
-
+        $additional_settings = Settings::editAdditional();
         $credentials =  $this->validate($request, [
             'email' => 'required|email',
             'password' => 'required|min:6'
         ]);
 
         if (Auth::guard('freelancer')->attempt($credentials, $request->remember)) {
+
+                if($additional_settings->subscription_mode == 0)
+				{ 
+				    return redirect('/freelancer/login');
+				}
+				else
+				{
+				//   if(auth()->user()->user_type == 'vendor')
+				//   {
+				// 	  if(auth()->user()->user_subscr_date >= date('Y-m-d'))
+				// 	  {
+				// 		return redirect('/');
+				// 	  }
+				// 	  else
+				// 	  {
+						return redirect('/freelancer-subscription');
+					//   }	
+				   }
+				//    else
+				//    {
+				// 	 return redirect('/'); //return redirect('/profile-settings');
+				//    }
+					
             return redirect()->intended(route('freelancer.dashboard'));
         }
 

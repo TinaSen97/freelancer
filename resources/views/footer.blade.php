@@ -207,7 +207,13 @@
             </li>
             @if($addition_settings->subscription_mode == 1)
             <li class="widget-list-item">
-              <a class="widget-list-link" href="{{ URL::to('/subscription') }}">{{ __('Subscription') }}</a>
+              @if(Auth::guard('freelancer')->check())
+               <a class="widget-list-link" href="{{ URL::to('/freelancer-subscription') }}">{{ __('Subscription') }}</a>
+              @elseif(Auth::check())
+                <a class="widget-list-link" href="{{ URL::to('/subscription') }}">{{ __('Subscription') }}</a>
+              @else
+                <a class="widget-list-link" href="{{ URL::to('/subscription') }}">{{ __('Subscription') }}</a>
+              @endif
             </li>
             @endif
             <li class="widget-list-item">

@@ -168,6 +168,14 @@
                                                 </select>
                                                 
                                             </div>   
+
+                                            <div class="form-group">
+                                                <label class="control-label mb-1" >Plan Type <span class="require">*</span></label>
+                                                <select class="form-control" name="plan_type" data-bvalidator="required">
+                                                    <option value="general">General</option>
+                                                    <option value="freelancer">Freelancer</option>
+                                                </select>
+                                            </div>
                                              
                                         </div>
                                         

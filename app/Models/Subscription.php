@@ -7,11 +7,14 @@ use Illuminate\Support\Facades\File;
 
 class Subscription extends Model
 {
+    protected $fillable = ['plan_type'];
+    protected $casts = [
+        'plan_type' => 'string',
+    ];
     
-	/* subscription */
-	
-  
-  public static function getsubscriData()
+    /* subscription */
+    
+    public static function getsubscriData()
   {
 
     $value=DB::table('subscription')->where('subscr_drop_status','=','no')->orderBy('subscr_id', 'desc')->get(); 
@@ -21,7 +24,7 @@ class Subscription extends Model
   
   public static function viewSubscription()
   {
-  $value=DB::table('subscription')->where('subscr_status','=',1)->where('subscr_drop_status','=','no')->orderBy('subscr_id', 'asc')->get(); 
+  $value=DB::table('subscription')->where('subscr_status','=',1)->where('subscr_drop_status','=','no')->where('plan_type','=','general')->orderBy('subscr_id', 'asc')->get(); 
     return $value;
   
   }
@@ -93,7 +96,16 @@ class Subscription extends Model
   }
  
   /* subscription */
+  /*Freelancer subscription*/
+
+  public static function viewFreelancerSubscription()
+  {
+  $value=DB::table('subscription')->where('subscr_status','=',1)->where('subscr_drop_status','=','no')->where('plan_type','=','freelancer')->orderBy('subscr_id', 'asc')->get(); 
+    return $value;
   
+  }
+
+  /*close freelancer subscription */ 
   
   
 	

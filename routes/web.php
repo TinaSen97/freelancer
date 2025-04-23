@@ -629,6 +629,11 @@ Route::get('/subscription-cashfree/', 'ProfileController@cashfree_success');
 Route::get('/subscription-nowpayments/{ord_token}', 'ProfileController@nowpayments_success');
 /* subscription */
 
+/* freelancer subscription */
+
+
+Route::get('/freelancer-subscription', 'CommonController@view_subscription');
+/* freelancer subscription */ 
 
 /* preview */
 Route::get('/preview/{slug}', 'CommonController@view_preview');
