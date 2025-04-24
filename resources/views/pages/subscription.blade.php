@@ -79,17 +79,22 @@
  							</ul>
  						</div>
                         @if(Auth::guest())
-                      <a class="inline-block text-center py-2 px-4 w-full rounded-l-xl rounded-t-xl font-bold leading-loose transition duration-200" href="{{ URL::to('/login') }}" style="background: {{ $subscription->button_bg_color }}; color:{{ $subscription->button_text_color }};">{{ __('Upgrade') }}</a>
+                          @if(Auth::guard('freelancer')->user()->user_subscr_type == $subscription->subscr_name)
+                            <a class="inline-block text-center py-2 px-4 w-full rounded-l-xl rounded-t-xl font-bold leading-loose transition duration-200" href="{{ URL::to('/login') }}" style="background: {{ $subscription->button_bg_color }}; color:{{ $subscription->button_text_color }};">{{ __('Upgrade') }}</a>
+                          @else
+                            <a class="inline-block text-center py-2 px-4 w-full rounded-l-xl rounded-t-xl font-bold leading-loose transition duration-200" href="{{ URL::to('/freelancer-confirm-subscription') }}/{{ base64_encode($subscription->subscr_id) }}" style="background: {{ $subscription->button_bg_color }}; color:{{ $subscription->button_text_color }};">{{ __('Upgrade') }}</a>
+                          @endif
+
                         @else
-                        @if(Auth::user()->id != 1)
-                        
-                        @if(Auth::user()->user_subscr_type == $subscription->subscr_name)
-                        <a class="inline-block text-center py-2 px-4 w-full rounded-l-xl rounded-t-xl font-bold leading-loose transition duration-200" href="javascript:void(0)" style="background: {{ $subscription->button_bg_color }}; color:{{ $subscription->button_text_color }};">{{ __('Upgrade') }}</a>
-                        @else
-                        <a class="inline-block text-center py-2 px-4 w-full rounded-l-xl rounded-t-xl font-bold leading-loose transition duration-200" href="{{ URL::to('/confirm-subscription') }}/{{ base64_encode($subscription->subscr_id) }}" style="background: {{ $subscription->button_bg_color }}; color:{{ $subscription->button_text_color }};">{{ __('Upgrade') }}</a>
-                        @endif
-                        
-                        @endif
+                            @if(Auth::user()->id != 1)
+                            
+                            @if(Auth::user()->user_subscr_type == $subscription->subscr_name)
+                            <a class="inline-block text-center py-2 px-4 w-full rounded-l-xl rounded-t-xl font-bold leading-loose transition duration-200" href="javascript:void(0)" style="background: {{ $subscription->button_bg_color }}; color:{{ $subscription->button_text_color }};">{{ __('Upgrade') }}</a>
+                            @else
+                            <a class="inline-block text-center py-2 px-4 w-full rounded-l-xl rounded-t-xl font-bold leading-loose transition duration-200" href="{{ URL::to('/confirm-subscription') }}/{{ base64_encode($subscription->subscr_id) }}" style="background: {{ $subscription->button_bg_color }}; color:{{ $subscription->button_text_color }};">{{ __('Upgrade') }}</a>
+                            @endif
+                            
+                          @endif
                         @endif
                         </div>
                     </div>

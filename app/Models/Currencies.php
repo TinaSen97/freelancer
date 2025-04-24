@@ -60,7 +60,7 @@ class Currencies extends Model
   
   public static function getCurrency($code)
   {
-
+    
     $value=DB::table('currencies')->where('currency_code', '=', $code)->first(); 
     return $value;
 	

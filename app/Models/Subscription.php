@@ -105,6 +105,21 @@ class Subscription extends Model
   
   }
 
+
+  public static function upFreelancersubscribeData($user_id,$updatedata)
+  {
+    DB::table('freelancers')
+      ->where('id', $user_id)
+	  ->update($updatedata);
+  }
+
+  public static function confirmsubscriFreelancerData($user_id,$checkoutdata)
+  {
+    DB::table('freelancers')
+      ->where('id', $user_id)
+	  ->update($checkoutdata);
+  }
+  
   /*close freelancer subscription */ 
   
   

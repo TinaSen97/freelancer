@@ -468,7 +468,10 @@ Route::prefix('freelancer')->group(function () {
         Route::put('/profile-settings', 'FreelancerProfileController@update')->name('freelancer.profile-settings.update');
         Route::post('/profile-settings/upload-image', 'FreelancerProfileController@uploadImage')->name('freelancer.profile-settings.upload-image');
 		Route::get('/freelancer/document/{id}/{type}', 'FreelancerProfileController@show')->name('freelancer.document.show');
-	
+		
+		
+		
+		
         // Logout
         Route::get('/logout', 'FreelancerAuthController@logout')->name('freelancer.logout');
 
@@ -495,6 +498,9 @@ Route::prefix('freelancer')->group(function () {
 });
 
 
+Route::get('/freelancer-subscription', 'CommonController@view_subscription');
+Route::get('/freelancer-confirm-subscription/{id}', 'FreelancerProfileController@upgrade_subscription');
+Route::post('/freelancer-confirm-subscription', 'FreelancerProfileController@update_subscription')->name('freelancer-confirm-subscription');
 /* admin panel */
 
 Route::group(['middleware' => ['HtmlMinifier', 'cache', 'XSS']], function () {
@@ -632,7 +638,6 @@ Route::get('/subscription-nowpayments/{ord_token}', 'ProfileController@nowpaymen
 /* freelancer subscription */
 
 
-Route::get('/freelancer-subscription', 'CommonController@view_subscription');
 /* freelancer subscription */ 
 
 /* preview */
